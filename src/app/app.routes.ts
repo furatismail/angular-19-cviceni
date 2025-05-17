@@ -18,5 +18,9 @@ export const routes: Routes = [
     {
         loadChildren: () => import('./features/settings/settings.routes').then((routes) => routes.SettingsRoutes),
         path: 'settings'
+    },
+    {
+        loadChildren: () => import('./features/photos/photos.routes').then((routes) => routes.PhotosRoutes),
+        path: 'photos'
     }
 ];
