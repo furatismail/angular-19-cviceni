@@ -1,35 +1,104 @@
-import { Component } from '@angular/core';
-import { TIME_START_DATE, TimeComponent } from '../../../shared/components/time/time.component';
+import { AsyncPipe, JsonPipe } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { lastValueFrom, Subscription } from 'rxjs';
+import { BitcoinPriceService } from '../../../core/services/bitcoin.service';
+import { UserService } from '../../../core/services/user.service';
+import { User } from '../../../shared/interfaces/user.interface';
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [TimeComponent],
+  imports: [JsonPipe, AsyncPipe],
   templateUrl: './main.component.html',
-  styleUrl: './main.component.css',
-  providers: [{ provide: TIME_START_DATE, useValue: '01.01.2025' }
-  ]
+  styleUrl: './main.component.css'
 })
-export class MainComponent {
-  decision = true
-  weight = 251
-  tv = 'prima'
+export class MainComponent implements OnInit {
 
-  members = [
-    // {
-    //   id: 'uuid1',
-    //   name: 'Karel',
-    //   dateOfBirth: '22.11.1990'
-    // },
-    // {
-    //   id: 'uuid2',
-    //   name: 'Petr',
-    //   dateOfBirth: '22.11.1970'
-    // }
-  ]
+  //////////////////////////////////// 1 ////////////////////////////////////
+  // users$: Observable<Array<User> | null> = of(null)
+  // private userService = inject(UserService)
 
-  trackByMemberId(index: number, member: any): string {
-    return member.id;
+
+  // ngOnInit(): void {
+  //   this.users$ = this.userService.getUsers()
+  // }
+  //////////////////////////////////// 1 ////////////////////////////////////
+
+
+  //////////////////////////////////// 2 ////////////////////////////////////
+  // users: Array<User> = []
+  // private userService = inject(UserService)
+  // private subscription = new Subscription()
+
+
+  // ngOnInit(): void {
+  //   this.subscription.add(this.userService.getUsers().subscribe((res: Array<User>) => {
+  //     this.users = res;
+  //   }))
+  // }
+
+  // ngOnDestroy() {
+  //   this.subscription.unsubscribe()
+  // }
+  //////////////////////////////////// 2 ////////////////////////////////////
+
+
+  ////////////////////////////////// 3 ////////////////////////////////////
+  // users: Array<User> = []
+  // private userService = inject(UserService)
+  // private destroy$ = new Subject<void>();
+
+
+  // ngOnInit(): void {
+  //   this.userService.getUsers()
+  //     .pipe(takeUntil(this.destroy$))
+  //     .subscribe((res: Array<User>) => {
+  //       this.users = res;
+  //     });
+  // }
+
+  // ngOnDestroy() {
+  //   this.destroy$.next();
+  //   this.destroy$.complete();
+  // }
+  ////////////////////////////////// 3 ////////////////////////////////////
+
+  //////////////////////////////// 4 ////////////////////////////////////
+  // users: Array<User> = []
+  // private userService = inject(UserService)
+  // private destroy$ = new Subject<void>();
+
+
+  // ngOnInit(): void {
+  //   this.userService.getUsers()
+  //     .pipe(take(1))
+  //     .subscribe((res: Array<User>) => {
+  //       this.users = res;
+  //     });
+  // }
+
+  // ngOnDestroy() {
+
+  // }
+  //////////////////////////////// 4 ////////////////////////////////////
+
+  users: Array<User> = []
+  private userService = inject(UserService)
+  private bitcoinPriceService = inject(BitcoinPriceService)
+  private subscription = new Subscription()
+
+  ngOnInit(): void {
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
+  }
+
+  async getUsers() {
+    this.users = await lastValueFrom(this.userService.getUsers());
+
+    this.subscription.add(this.bitcoinPriceService.getBitcoinPrice().subscribe((res) => console.log(res)))
+
   }
 
 }
