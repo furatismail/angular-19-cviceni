@@ -1,27 +1,46 @@
 /* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
 /* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
+  // Zakáže automatickou kompilaci při uložení souboru (v IDE jako VS Code)
   "compileOnSave": false,
   "compilerOptions": {
+    // Cílový výstup kompilovaných JS souborů
     "outDir": "./dist/out-tsc",
+    // Zapne všechny přísné typové kontroly TypeScriptu
     "strict": true,
+    // Vyžaduje použití klíčového slova 'override' při přepisování metod
     "noImplicitOverride": true,
+    // Zakáže přístup k vlastnostem přes indexovou signaturu bez ověření
     "noPropertyAccessFromIndexSignature": true,
+    // Vynutí, že každá funkce musí vracet hodnotu ve všech větvích
     "noImplicitReturns": true,
+    // Zabrání neúmyslnému propadnutí mezi `case` větvemi ve switch
     "noFallthroughCasesInSwitch": true,
+    // Přeskočí kontrolu typů v knihovnách třetích stran (zrychluje build)
     "skipLibCheck": true,
+    // Každý soubor se kompiluje jako samostatný modul (potřebné např. pro Vite)
     "isolatedModules": true,
+    // Povolit kompatibilitu mezi CommonJS a ES Module
     "esModuleInterop": true,
+    // Povolit používání dekorátorů (např. @Component, @Injectable)
     "experimentalDecorators": true,
+    // Používá nový způsob rozlišení modulů – vhodný pro moderní bundlery (Vite, esbuild)
     "moduleResolution": "bundler",
+    // Používá pomocné funkce z 'tslib' místo opakovaného generování
     "importHelpers": true,
+    // Verze JS do které se bude překládat (např. async/await, class fields)
     "target": "ES2022",
+    // Typ výstupního modulu (ES modules syntaxe místo CommonJS)
     "module": "ES2022"
   },
   "angularCompilerOptions": {
+    // Nepoužívej zastaralý formát ID pro i18n překlady
     "enableI18nLegacyMessageIdFormat": false,
+    // Vyžaduj správné anotace v DI systému (pomáhá chytit chyby u služeb)
     "strictInjectionParameters": true,
+    // Vynutí, že @Input vlastnosti musí mít modifikátor přístupu (např. public)
     "strictInputAccessModifiers": true,
+    // Přísné typové kontroly i uvnitř šablon komponent (HTML)
     "strictTemplates": true
   }
 }
