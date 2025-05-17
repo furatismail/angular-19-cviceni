@@ -95,9 +95,32 @@ export class MainComponent implements OnInit {
   }
 
   async getUsers() {
-    this.users = await lastValueFrom(this.userService.getUsers());
+    setTimeout(() => {
+      console.log('setTimeout 1000')
+    }, 1000);
+    setTimeout(() => {
+      console.log('setTimeout 1')
+    }, 1);
+    setTimeout(() => {
+      console.log('setTimeout 0')
+    }, 0);
 
-    this.subscription.add(this.bitcoinPriceService.getBitcoinPrice().subscribe((res) => console.log(res)))
+    console.log('sync zdar')
+
+    this.users = await lastValueFrom(this.userService.getUsers());
+    console.log(this.users, 'this.users z await')
+    lastValueFrom(this.userService.getUsers()).then((res) => setTimeout(() => {
+      console.log(res, 'then in settimout')
+    }, 0))
+    this.userService.getUsers().subscribe((res) => console.log(res, 'subscribe'))
+    lastValueFrom(this.userService.getUsers()).then((res) => console.log(res, 'then'))
+
+
+
+
+    console.log('sync ahoj')
+    console.log('sync cau')
+
 
   }
 
