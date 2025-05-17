@@ -109,12 +109,19 @@ export class MainComponent implements OnInit {
 
     this.users = await lastValueFrom(this.userService.getUsers());
     console.log(this.users, 'this.users z await')
-    lastValueFrom(this.userService.getUsers()).then((res) => setTimeout(() => {
-      console.log(res, 'then in settimout')
-    }, 0))
     this.userService.getUsers().subscribe((res) => console.log(res, 'subscribe'))
-    lastValueFrom(this.userService.getUsers()).then((res) => console.log(res, 'then'))
+    lastValueFrom(this.userService.getUsers()).then((res) => setTimeout(() => {
+      console.log(res, 'then in settimout 1001')
+    }, 1001))
 
+    lastValueFrom(this.userService.getUsers()).then((res) => console.log(res, 'then 0'))
+
+    lastValueFrom(this.userService.getUsers()).then((res) => console.log(res, 'then 1'))
+
+    lastValueFrom(this.userService.getUsers()).then((res) => console.log(res, 'then 2'))
+    lastValueFrom(this.userService.getUsers()).then((res) => setTimeout(() => {
+      console.log(res, 'then in settimout 0')
+    }, 0))
 
 
 
