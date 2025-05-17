@@ -1,12 +1,14 @@
-import { NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { Component } from '@angular/core';
+import { TIME_START_DATE, TimeComponent } from '../../../shared/components/time/time.component';
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [NgIf, NgFor, NgSwitchCase, NgSwitch, NgSwitchDefault],
+  imports: [TimeComponent],
   templateUrl: './main.component.html',
-  styleUrl: './main.component.css'
+  styleUrl: './main.component.css',
+  providers: [{ provide: TIME_START_DATE, useValue: '01.01.2025' }
+  ]
 })
 export class MainComponent {
   decision = true
