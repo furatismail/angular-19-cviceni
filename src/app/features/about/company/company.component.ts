@@ -15,7 +15,7 @@ export class CompanyComponent {
   }
 
   navigateToAbout() : void {
-    this.router.navigate(['/team']);
+    this.router.navigate(['/about/team']);
   }
 
 }
