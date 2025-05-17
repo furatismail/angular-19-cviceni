@@ -1,0 +1,148 @@
+<!-- --------------------------------------//////////////////--------------------------------------
+      SEKCE: ngIf vs @if
+------------------------------------------------------------------------------------///////////////////////-------------------------------------- -->
+<div style="border: 4px solid black; padding: 16px; margin: 10px">
+  <!-- start KLASICKY IF -->
+
+  <h1>ngIf vs if</h1>
+
+  <!-- Klasický ngIf pomocí strukturální direktivy -->
+  <div *ngIf="decision">ngIf</div>
+
+  <!-- Tento zápis nebude fungovat – Angular si myslí, že se jedná o animaci -->
+  <!-- <div @if (decision)>
+    Hello
+  </div> -->
+
+  <hr />
+
+  <!-- Nová Angular kontrolní syntaxe: @if -->
+  @if (decision) {
+    <div>if</div>
+  }
+
+  <!-- end KLASICKY IF -->
+</div>
+
+<!-- --------------------------------------//////////////////--------------------------------------
+      SEKCE: ngIf else vs @if @else
+------------------------------------------------------------------------------------///////////////////////-------------------------------------- -->
+
+<div style="border: 4px solid black; padding: 16px; margin: 10px">
+  <!-- start IF ELSE -->
+
+  <h1>ngIf else vs if else</h1>
+
+  <!-- Klasický přístup pomocí ngIf a ng-template -->
+  <p *ngIf="weight > 500; else check250">Weight is more than 500</p>
+
+  <ng-template #check250>
+    <p *ngIf="weight > 250; else lessThan250">Weight is more than 250</p>
+  </ng-template>
+
+  <ng-template #lessThan250>
+    <p>Weight is less than 250</p>
+  </ng-template>
+
+  <hr />
+
+  <!-- Nová kontrolní syntaxe: @if, @else if, @else -->
+  @if (weight > 500) {
+    <p>Weight is more than 500</p>
+  } @else if (weight > 250) {
+    <p>Weight is more than 250</p>
+  } @else {
+    <p>Weight is not more than 250</p>
+  }
+
+  <!-- end IF ELSE -->
+</div>
+
+<!-- --------------------------------------//////////////////--------------------------------------
+      SEKCE: ngSwitch vs @switch
+------------------------------------------------------------------------------------///////////////////////-------------------------------------- -->
+
+<div style="border: 4px solid black; padding: 16px; margin: 10px">
+  <!-- start SWITCH -->
+
+  <h1>ngSwitch vs Switch</h1>
+
+  <!-- Klasický ngSwitch přístup -->
+  <div [ngSwitch]="tv">
+    <div *ngSwitchCase="'nova'">TV nova</div>
+    <div *ngSwitchCase="'ct1'">ČT1</div>
+    <div *ngSwitchDefault>Prima</div>
+  </div>
+
+  <hr />
+
+  <!-- Nová kontrolní syntaxe: @switch -->
+  @switch (tv) {
+    @case ("nova") {
+      <div>TV nova</div>
+    }
+    @case ("ct1") {
+      <div>ČT1</div>
+    }
+    @default {
+      <div>Prima</div>
+    }
+  }
+
+  <!-- end SWITCH -->
+</div>
+
+<!-- --------------------------------------//////////////////--------------------------------------
+      SEKCE: ngFor vs @for
+------------------------------------------------------------------------------------///////////////////////-------------------------------------- -->
+
+<div style="border: 4px solid black; padding: 16px; margin: 10px">
+  <!-- start FOR -->
+
+  <h1>ngFor vs for</h1>
+
+  <!-- Klasický ngFor se všemi lokálními proměnnými -->
+  <ul>
+    <li
+      *ngFor="
+        let member of members;
+        let i = index;
+        let first = first;
+        let last = last;
+        let even = even;
+        let odd = odd;
+        trackBy: trackByMemberId
+      "
+    >
+      first: {{ first }} | last: {{ last }} | even {{ even }} | odd {{ odd }} |
+      {{ i + 1 }}. {{ member?.name }} ({{ member?.dateOfBirth }})
+    </li>
+
+    <li *ngIf="members?.length === 0">Nic tu neni</li>
+  </ul>
+
+  <hr />
+
+  <!-- Nová kontrolní syntaxe: @for a @empty -->
+  <ul>
+    @for (
+      member of members;
+      track member.id;
+      let i = $index;
+      let first = $first;
+      let last = $last;
+      let even = $even;
+      let odd = $odd
+    ) {
+      <li>
+        first: {{ first }} | last: {{ last }} | even {{ even }} | odd
+        {{ odd }} | {{ i + 1 }}. {{ member?.name }} ({{ member?.dateOfBirth }})
+      </li>
+    }
+    @empty {
+      <li>Nic tu neni</li>
+    }
+  </ul>
+
+  <!-- end FOR -->
+</div>
