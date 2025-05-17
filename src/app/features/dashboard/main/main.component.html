@@ -1,12 +1,22 @@
 <h1>Main component</h1>
 
+<input type="text" [(ngModel)]="message"> 
+<br>
+obj:
+{{obj | json}}
+<br>
+message: 
+{{message | json}}
+
+
+<button (click)="changeMessage()">click</button>
 
 <!-- // 1. varianta -->
 <!-- <pre>{{ users$ | async | json }}</pre> -->
 
 
 <!-- // 2. varianta -->
-<pre>{{ users | json }}</pre>
+<!-- <pre>{{ users$ | async | json }}</pre> -->
 
 
-<button class="button" (click)="getUsers()">DEJ MI DATA</button>
+<!-- <button class="button" (click)="getUsers()">DEJ MI DATA</button> -->

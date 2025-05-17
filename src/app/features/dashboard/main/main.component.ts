@@ -1,18 +1,32 @@
 import { AsyncPipe, JsonPipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { lastValueFrom, Subscription } from 'rxjs';
-import { BitcoinPriceService } from '../../../core/services/bitcoin.service';
-import { UserService } from '../../../core/services/user.service';
-import { User } from '../../../shared/interfaces/user.interface';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [JsonPipe, AsyncPipe],
+  imports: [JsonPipe, AsyncPipe, FormsModule],
   templateUrl: './main.component.html',
-  styleUrl: './main.component.css'
+  styleUrl: './main.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainComponent implements OnInit {
+export class MainComponent {
+
+  //////////////////////////////////// 1 ////////////////////////////////////
+  // users$: Observable<Array<User> | null> = of(null)
+  // private userService = inject(UserService)
+  private cd = inject(ChangeDetectorRef)
+  message = ''
+  obj = {}
+
+  changeMessage() {
+    this.obj = { ...this.obj, message: this.message }
+
+    setTimeout(() => {
+          this.obj = { ...this.obj, message: 'change' }
+          this.cd.detectChanges()
+    }, 1000);
+  }
 
   //////////////////////////////////// 1 ////////////////////////////////////
   // users$: Observable<Array<User> | null> = of(null)
@@ -82,53 +96,53 @@ export class MainComponent implements OnInit {
   // }
   //////////////////////////////// 4 ////////////////////////////////////
 
-  users: Array<User> = []
-  private userService = inject(UserService)
-  private bitcoinPriceService = inject(BitcoinPriceService)
-  private subscription = new Subscription()
+  // users: Array<User> = []
+  // private userService = inject(UserService)
+  // private bitcoinPriceService = inject(BitcoinPriceService)
+  // private subscription = new Subscription()
 
-  ngOnInit(): void {
-  }
+  // ngOnInit(): void {
+  // }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe()
-  }
+  // ngOnDestroy() {
+  //   this.subscription.unsubscribe()
+  // }
 
-  async getUsers() {
-    setTimeout(() => {
-      console.log('setTimeout 1000')
-    }, 1000);
-    setTimeout(() => {
-      console.log('setTimeout 1')
-    }, 1);
-    setTimeout(() => {
-      console.log('setTimeout 0')
-    }, 0);
+  // async getUsers() {
+  //   setTimeout(() => {
+  //     console.log('setTimeout 1000')
+  //   }, 1000);
+  //   setTimeout(() => {
+  //     console.log('setTimeout 1')
+  //   }, 1);
+  //   setTimeout(() => {
+  //     console.log('setTimeout 0')
+  //   }, 0);
 
-    console.log('sync zdar')
+  //   console.log('sync zdar')
 
-    this.users = await lastValueFrom(this.userService.getUsers());
-    console.log(this.users, 'this.users z await')
-    this.userService.getUsers().subscribe((res) => console.log(res, 'subscribe'))
-    lastValueFrom(this.userService.getUsers()).then((res) => setTimeout(() => {
-      console.log(res, 'then in settimout 1001')
-    }, 1001))
+  //   this.users = await lastValueFrom(this.userService.getUsers());
+  //   console.log(this.users, 'this.users z await')
+  //   this.userService.getUsers().subscribe((res) => console.log(res, 'subscribe'))
+  //   lastValueFrom(this.userService.getUsers()).then((res) => setTimeout(() => {
+  //     console.log(res, 'then in settimout 1001')
+  //   }, 1001))
 
-    lastValueFrom(this.userService.getUsers()).then((res) => console.log(res, 'then 0'))
+  //   lastValueFrom(this.userService.getUsers()).then((res) => console.log(res, 'then 0'))
 
-    lastValueFrom(this.userService.getUsers()).then((res) => console.log(res, 'then 1'))
+  //   lastValueFrom(this.userService.getUsers()).then((res) => console.log(res, 'then 1'))
 
-    lastValueFrom(this.userService.getUsers()).then((res) => console.log(res, 'then 2'))
-    lastValueFrom(this.userService.getUsers()).then((res) => setTimeout(() => {
-      console.log(res, 'then in settimout 0')
-    }, 0))
-
-
-
-    console.log('sync ahoj')
-    console.log('sync cau')
+  //   lastValueFrom(this.userService.getUsers()).then((res) => console.log(res, 'then 2'))
+  //   lastValueFrom(this.userService.getUsers()).then((res) => setTimeout(() => {
+  //     console.log(res, 'then in settimout 0')
+  //   }, 0))
 
 
-  }
+
+  //   console.log('sync ahoj')
+  //   console.log('sync cau')
+
+
+  // }
 
 }
