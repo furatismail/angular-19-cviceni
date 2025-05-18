@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 
 @Component({
   selector: 'app-signal-search',
@@ -9,19 +9,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./signal-search.component.css'] // Corrected the property name from styleUrl to styleUrls
 })
 export class SignalSearchComponent {
-  search = '';
-  users = [
+  search = signal('');
+  users = signal([
     { id: 1, name: "Carl" },
     { id: 2, name: 'Peter' }
-  ]
-  filteredUsers = this.users;
+  ])
+  filteredUsers = computed(() => this.users().filter((u) => u.name.toLowerCase().startsWith(this.search())))
 
   setSearchString(e: Event) {
-    this.search = (e.target as HTMLInputElement).value.toLowerCase();
-    this.filteredUsers = this.users.filter((u) => u.name.toLowerCase().startsWith(this.search));
+    this.search.set((e.target as HTMLInputElement).value.toLowerCase());
   }
 
   addUser() {
-    this.users = [...this.users, { id: 3, name: "John" }];
+    this.users.update((users) => [...users, { id: 3, name: "John" }]);
   }
+
 }
