@@ -24,8 +24,8 @@ export class CustomPreloadingStrategy implements PreloadingStrategy {
     const preloadDelay = route.data?.['preloadDelay'] ?? 0;
 
     // Výpis pro ladění: aktuální routa a její nastavené zpoždění
-    console.log(route, 'route');
-    console.log(preloadDelay, 'preloadDelay');
+    // console.log(route, 'route');
+    // console.log(preloadDelay, 'preloadDelay');
 
     // Rozhodnutí: pokud má route v `data.preload === true`, přednačti ji
     if (route.data?.['preload'] === true) {
