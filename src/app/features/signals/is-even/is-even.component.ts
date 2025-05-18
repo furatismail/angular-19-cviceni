@@ -68,7 +68,7 @@ import { Component, input } from "@angular/core";
 export class IsEvenComponent {
   isEven = input.required({
     alias: 'counterValue',
-    transform: this.isCounterEven
+    transform: (v: number) => this.isCounterEven
   });
 
   isCounterEven(x: number): boolean {
