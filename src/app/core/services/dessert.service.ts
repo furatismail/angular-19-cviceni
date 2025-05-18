@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { delay, Observable, of, throwError } from 'rxjs';
 import { Dessert, DessertFilter } from '../../shared/interfaces/models/dessert.model';
 
 @Injectable({ providedIn: 'root' })
 export class DessertService {
   find(filter: DessertFilter): Observable<Dessert[]> {
-    // Mocked data
+    // Simulovaná chyba, pokud originalName obsahuje "error"
+    if (filter.originalName.toLowerCase().includes('error')) {
+      return throwError(() => new Error('Simulated server error')).pipe(delay(1000));
+    }
+
     const allDesserts: Dessert[] = [
       { id: 1, originalName: 'Tiramisu', englishName: 'Tiramisu' },
       { id: 2, originalName: 'Větrník', englishName: 'Pinwheel cake' },

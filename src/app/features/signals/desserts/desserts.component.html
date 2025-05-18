@@ -3,7 +3,7 @@
 
   <input [ngModel]="originalName()" (ngModelChange)="originalName.set($event)" placeholder="Original name" />
   <input [ngModel]="englishName()" (ngModelChange)="englishName.set($event)" placeholder="English name" />
-  <button (click)="search()">Search</button>
+  <!-- <button (click)="search()">Search</button> -->
 
   <div *ngIf="loading()">Loading...</div>
 
