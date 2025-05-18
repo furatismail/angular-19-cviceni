@@ -39,7 +39,24 @@
 //   }
 // }
 
-import { Component, computed, input } from "@angular/core";
+// import { Component, computed, input } from "@angular/core";
+
+// @Component({
+//   selector: 'app-is-even',
+//   standalone: true,
+//   imports: [],
+//   templateUrl: './is-even.component.html',
+//   styleUrl: './is-even.component.css'
+// })
+// export class IsEvenComponent {
+//   counter = input.required<number>({
+//     alias: 'counterValue'
+//   });
+//   isEven =  computed(() => this.counter() % 2 === 0);
+// }
+
+
+import { Component, input } from "@angular/core";
 
 @Component({
   selector: 'app-is-even',
@@ -49,8 +66,14 @@ import { Component, computed, input } from "@angular/core";
   styleUrl: './is-even.component.css'
 })
 export class IsEvenComponent {
-  counter = input.required<number>({
-    alias: 'counterValue'
+  isEven = input.required({
+    alias: 'counterValue',
+    transform: this.isCounterEven
   });
-  isEven = computed(() => this.counter() % 2 === 0);
+
+  isCounterEven(x: number): boolean {
+    console.log(x, 'x')
+    const r = (x % 2 === 0);
+    return r;
+  }
 }
