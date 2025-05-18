@@ -66,22 +66,23 @@ export class SignalSearchComponent {
   //   this.logger.destroy();
   // }
 
-  // Proměnná určující, zda se má zobrazit hodnota počítadla
   showCount = false;
-
-  // Reaktivní signal uchovávající aktuální hodnotu počítadla, výchozí hodnota je 0
   count = signal(0);
-
-  // Reaktivní vypočítaná hodnota (computed) založená na hodnotách showCount a count
   conditionalCount = computed(() => {
-    // Pokud je showCount nastaveno na true, zobrazí se hodnota počítadla
     if (this.showCount) {
-      // Vrací retezec s aktuální hodnotou počítadla
       return `The count is ${this.count()}.`;
     } else {
-      // Pokud showCount není true, vrací alternativní zprávu
       return 'Nothing to see here!';
     }
   });
 
+  ngOnInit() {
+    setTimeout(() => {
+      this.count.set(11);
+      this.showCount = true
+
+      console.log(this.count())
+    }, 3000);
+  }
+  
 }
