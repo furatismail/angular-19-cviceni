@@ -1,4 +1,4 @@
-import { Component, effect, linkedSignal, signal } from '@angular/core';
+import { Component, computed, effect, linkedSignal, signal } from '@angular/core';
 interface ShippingMethod {
   id: number;
   name: string;
@@ -10,41 +10,40 @@ interface ShippingMethod {
   styleUrl: './linked-signal-example.component.css'
 })
 export class LinkedSignalExampleComponent {
-  // Vytváří signal (reaktivní proměnnou) obsahující výchozí pole s možnostmi dopravy.
+  // Reaktivní signal obsahující dostupné způsoby dopravy.
   shippingOptions = signal<ShippingMethod[]>([
-    { id: 0, name: 'Ground' }, // Možnost 1: Pozemní doprava
-    { id: 1, name: 'Air' },    // Možnost 2: Letecká doprava
-    { id: 2, name: 'Sea' },    // Možnost 3: Námořní doprava
+    { id: 0, name: 'Ground' },
+    { id: 1, name: 'Air' },
+    { id: 2, name: 'Sea' },
   ]);
+  selectedOptionTmp = signal<number | null>(null)
 
-  // Vytváří signal, který je propojený s `shippingOptions` a automaticky se aktualizuje, pokud se možnosti změní.
-  selectedOption = linkedSignal<ShippingMethod[], ShippingMethod>({
-    // `source` definuje, na který signál se propojený signal naváže (v tomto případě shippingOptions).
-    source: this.shippingOptions,
-
-    // `computation` říká, jak se má z nových hodnot `shippingOptions` vypočítat `selectedOption`.
-    computation: (newOptions, previous) => {
-      // Pokud nově dostupné možnosti stále obsahují dříve vybranou možnost (podle ID), zachová se výběr.
-      // Pokud ne, automaticky se zvolí první možnost z nového seznamu.
-      return (
-        newOptions.find((opt) => opt.id === previous?.value.id) ?? newOptions[0]
-      );
-    },
+  // Odvozená hodnota – vždy ukazuje na první možnost z `shippingOptions`.
+  // Nepamatuje si předchozí výběr, neaktualizuje se podle změn jako `linkedSignal`.
+  selectedOption = computed(() => {
+    const options = this.shippingOptions();
+    const selected = this.selectedOptionTmp();
+    console.log(selected)
+    if (selected) {
+      const index = options.findIndex((item) => item.id === selected)
+      return options[index]
+    }
+    return options[0]; // Vždy vrací první možnost – žádné uchování předchozí volby.
   });
 
-  // Funkce, která změní aktuálně vybranou možnost dopravy podle indexu v poli `shippingOptions`.
+  // Pokus o změnu výběru jako dříve zde nebude fungovat – `computed` nelze ručně nastavit.
   changeShipping(index: number) {
-    // Zavoláním set() se nastaví nový vybraný způsob dopravy podle indexu.
-    this.selectedOption.set(this.shippingOptions()[index]);
+    // ⚠️ Nelze použít this.selectedOption.set(...) – computed je pouze pro čtení.
+    this.selectedOptionTmp.set(index)
+    console.warn('Nelze změnit selectedOption – je to pouze computed.');
   }
 
-  // Funkce, která přepíše celý seznam dostupných možností dopravy.
+  // Změní celé pole možností dopravy, ale `selectedOption` se pouze přepočítá na nový první prvek.
   changeShippingOptions() {
-    // Signál `shippingOptions` se přepíše novým polem s jinými hodnotami.
     this.shippingOptions.set([
-      { id: 0, name: 'Email' },           // Nová možnost: Elektronické doručení
-      { id: 1, name: 'Sea' },             // Ponechaná stará možnost: Námořní doprava
-      { id: 2, name: 'Postal Service' },  // Nová možnost: Poštovní služba
+      { id: 0, name: 'Email' },
+      { id: 2, name: 'Sea' },
+      { id: 3, name: 'Postal Service' },
     ]);
   }
 
