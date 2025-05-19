@@ -1,0 +1,15 @@
+/* Define the animation in a class */
+.rotate-circle {
+    animation: rotateCircle 10s linear infinite;
+    transform-origin: 50% 50%;
+}
+  
+  @keyframes rotateCircle {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  

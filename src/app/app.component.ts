@@ -7,10 +7,13 @@ import { GlitchFreeComponent } from './features/signals/glitch-free/glitch-free.
 import { GlitchComponent } from './features/signals/glitch/glitch.component';
 import { UntrackedExampleComponent } from "./features/signals/untracked-example/untracked-example.component";
 import { LinkedSignalExampleComponent } from "./features/signals/linked-signal-example/linked-signal-example.component";
+import { ToggleContainerComponent } from "./features/signals/content-child/toggle-container/toggle-container.component";
+import { ToggleButtonComponent } from "./features/signals/content-child/toggle-button/toggle-button.component";
+import { ViewChildComponent } from "./features/signals/view-child/view-child.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, TimeComponent, SignalSearchComponent, IsEvenComponent, GlitchFreeComponent, GlitchComponent, UntrackedExampleComponent, LinkedSignalExampleComponent],
+  imports: [RouterOutlet, RouterLink, TimeComponent, SignalSearchComponent, IsEvenComponent, GlitchFreeComponent, GlitchComponent, UntrackedExampleComponent, LinkedSignalExampleComponent, ToggleContainerComponent, ToggleButtonComponent, ViewChildComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

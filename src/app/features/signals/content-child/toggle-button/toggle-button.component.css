@@ -1,0 +1,23 @@
+.toggle-button {
+  border: 4px solid black;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  font-family: sans-serif;
+  margin-top: 10px;
+}
+
+.toggle-button button {
+  margin-left: 10px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 2px solid black;
+  background-color: white;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.toggle-button button:hover {
+  background-color: black;
+  color: white;
+}
