@@ -5,10 +5,11 @@ import { SignalSearchComponent } from './features/signals/signal-search/signal-s
 import { IsEvenComponent } from './features/signals/is-even/is-even.component';
 import { GlitchFreeComponent } from './features/signals/glitch-free/glitch-free.component';
 import { GlitchComponent } from './features/signals/glitch/glitch.component';
+import { UntrackedExampleComponent } from "./features/signals/untracked-example/untracked-example.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, TimeComponent, SignalSearchComponent, IsEvenComponent, GlitchFreeComponent, GlitchComponent],
+  imports: [RouterOutlet, RouterLink, TimeComponent, SignalSearchComponent, IsEvenComponent, GlitchFreeComponent, GlitchComponent, UntrackedExampleComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
