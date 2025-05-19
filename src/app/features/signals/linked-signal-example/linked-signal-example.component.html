@@ -1,0 +1,17 @@
+<h2>Vyber způsob dopravy</h2>
+
+@for (method of shippingOptions(); track method.id) {
+<button (click)="changeShipping(method.id)" [class.selected]="method.id === selectedOption().id">
+    {{ method.name }}
+</button>
+}
+
+<hr />
+
+<p>
+    <strong>Vybraná metoda:</strong> {{ selectedOption().name }}
+</p>
+
+<button (click)="changeShippingOptions()">
+    Změnit seznam možností
+</button>
